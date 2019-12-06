@@ -1,0 +1,46 @@
+<div class="search">
+  <h1>Search your <strong>GIF</strong> <span>;)</span></h1>
+  <form class="search__form" (ngSubmit)="onSearchFormSubmit(search)">
+    <input type="text"
+      class="form-input"
+      name="search__form__input"
+      [(ngModel)]="search.term"
+      placeholder="What do you want to find?"
+    />
+    <input type="submit" class="form-btn" value="Search">
+  </form>
+
+  <p class="search__warning" *ngIf="hasSwearWords">
+    Ops! We don't like swear words at all. Please be a bit respectful!
+  </p>
+
+  <div class="search-results">
+    <ul class="search-results__list">
+      <li class="search-results__list-item" *ngFor="let item of list">
+        <img [src]="item.url" />
+      </li>
+    </ul>
+
+    <div class="pagination" *ngIf="totalPages">
+      <div class="pagination__pages">
+        <a class="pagination__page pagination__page--prev"
+          *ngIf="currentPage > firstPage"
+          (click)="getPage(currentPage - 1)">
+          &lt;
+        </a>
+        <a *ngFor="let page of paginationPages"
+          class="pagination__page"
+          [ngClass]="{ 'pagination__page--current': page === currentPage }"
+          (click)="getPage(page)">
+          {{ page }}
+        </a>
+        <a class="pagination__page pagination__page--next"
+          *ngIf="currentPage < lastPage"
+          (click)="getPage(currentPage + 1)">
+          &gt;
+        </a>
+      </div>
+      <div class="pagination__description">Showing page {{ currentPage }} of {{ totalPages }}</div>
+    </div>
+  </div>
+</div>
